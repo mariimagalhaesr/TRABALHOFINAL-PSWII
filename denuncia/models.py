@@ -1,5 +1,6 @@
 from django.db import models
 from categoria.models import Categoria
+from administrador.models import Administrador 
 import uuid
 
 class DescricaoDenuncia(models.Model):
@@ -25,6 +26,7 @@ class Denuncia(models.Model):
     descricao_denuncia = models.OneToOneField(DescricaoDenuncia, on_delete=models.CASCADE)
     data_cancelamento = models.DateTimeField(null=True, blank=True)
     data_finalizacao = models.DateTimeField(null=True, blank=True)
+    gerenciada_por = models.ForeignKey(Administrador, on_delete=models.SET_NULL, null=True, blank=True)
     codigo_acompanhamento = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, null=True)
 
     def __str__(self):
