@@ -2,11 +2,13 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
+from voz_anonima import views
 from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('denuncia/', include('denuncia.urls')),  
+    path('denuncia/', include('denuncia.urls')),
+    path('', views.index, name='index'),  
 ]
 
 if settings.DEBUG:

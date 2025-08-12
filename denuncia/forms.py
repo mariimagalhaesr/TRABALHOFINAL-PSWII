@@ -1,5 +1,5 @@
 from django import forms
-from .models import denuncia
+from .models import Denuncia
 
 class DenunciaForm(forms.ModelForm):
     data_acontecimento = forms.DateField(
@@ -11,7 +11,7 @@ class DenunciaForm(forms.ModelForm):
     )
 
     class Meta:
-        model = denuncia
+        model = Denuncia
         fields = '__all__'
 
     def clean_provas(self):
