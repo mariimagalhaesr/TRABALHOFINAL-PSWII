@@ -1,40 +1,36 @@
 from django.db import models
 from categoria.models import Categoria
+from usuario.models import Usuario
 import uuid
 
-class DescricaoDenuncia(models.Model):
-    categoria = models.ForeignKey(Categoria, on_delete=models.PROTECT)
-    data_ocorrido = models.DateTimeField()
-    descricao = models.TextField()
-    envolvidos = models.CharField(max_length=255, blank=True)
-    local_ocorrido = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.descricao
 
 class Denuncia(models.Model):
     STATUS_CHOICES = (
-        ('nova', 'Nova'),
+        ('recebida', 'Recebida'),
         ('em_andamento', 'Em Andamento'),
         ('finalizada', 'Finalizada'),
         ('arquivada', 'Arquivada'),
     )
-    data_envio = models.DateTimeField(auto_now_add=True)
+
+    descricao = models.TextField()
+    dt_envio = models.DateTimeField(auto_now_add=True)
+    codigo_rastreamento = models.CharField(max_length=32, unique=True, blank=True, editable=False, help_text="Código único para o denunciante acompanhar o status.")    
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='nova')
-    usuario_anonimo = models.CharField(max_length=100, blank=True, null=True, help_text="Preencha se a denúncia for anônima")
-    descricao_denuncia = models.OneToOneField(DescricaoDenuncia, on_delete=models.CASCADE)
-    data_cancelamento = models.DateTimeField(null=True, blank=True)
-    data_finalizacao = models.DateTimeField(null=True, blank=True)
-    codigo_acompanhamento = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, null=True)
+    dt_ocorrido = models.DateTimeField(verbose_name="Data e Hora do Ocorrido")
+    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, related_name="denuncias")
+    local = models.CharField(max_length=255)
+    dt_fim = models.DateField(null=True, blank=True)
+    envolvidos = models.TextField(blank=True, null=True, help_text="Descreva os envolvidos na denúncia, se houver.")
+    desfecho = models.TextField(blank=True, null=True)
+    recebido_por = models.ForeignKey(Usuario, on_delete=models.SET_NULL, blank=True, null=True, related_name="denuncias_recebidas")
+    finalizado_por = models.ForeignKey(Usuario, on_delete=models.SET_NULL, blank=True, null=True, related_name="denuncias_finalizadas")
+
+    def save(self, *args, **kwargs):
+
+        if not self.codigo_rastreamento:
+            self.codigo_rastreamento = uuid.uuid4().hex
+        super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"Denúncia #{self.pk} - {self.status}"
-    
-class TipoProva(models.Model):
-    audio = models.FileField(upload_to='provas/audios/', null=True, blank=True)
-    foto = models.ImageField(upload_to='provas/fotos/', null=True, blank=True)
-    video = models.FileField(upload_to='provas/videos/', null=True, blank=True)
-    denuncia = models.ForeignKey('Denuncia', on_delete=models.CASCADE, related_name='provas')
+        return f"Denúncia #{self.id} - {self.categoria.nome}"
 
-    def __str__(self):
-        return f"Prova para Denúncia #{self.denuncia.id}"

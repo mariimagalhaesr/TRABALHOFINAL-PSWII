@@ -1,0 +1,176 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Voz Anônima - Painel</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <link href="{% static 'assets/img/favicon.png' %}" rel="icon">
+  <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
+</head>
+
+<body class="index-page">
+
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="header-container container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+      <a href="{% url 'index' %}" class="logo d-flex align-items-center me-auto me-xl-0">
+        <h1 class="sitename">Voz Anônima</h1>
+      </a>
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="{% url 'index' %}">Página Inicial</a></li>
+          <li><a href="{% url 'consultar_denuncia' %}">Visualizar todas as denúncias</a></li>
+          <li><a href="{% url 'listar_categorias' %}">Visualizar todas as categorias</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+      <div class="d-flex align-items-center gap-2">
+        <a href="" class="btn btn-outline-secondary btn-sm">Deslogar</a>
+      </div>
+    </div>
+  </header>
+
+<main class="main">
+    <div class="page-title dark-background">
+      <div class="container position-relative">
+        <h1>Painel do Gestor</h1>
+        <p>Visão geral e gerenciamento do sistema de denúncias.</p>
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a href="{% url 'index' %}">Home</a></li>
+            <li class="current">Painel</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+    <section id="admin-panel" class="admin-panel section">
+      <div class="container">
+        
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="card bg-primary text-white text-center shadow">
+                  <div class="card-body">
+                    <h5 class="card-title">Total de Denúncias</h5>
+                    <p class="card-text display-4">{{ total_denuncias }}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card bg-warning text-white text-center shadow">
+                  <div class="card-body">
+                    <h5 class="card-title">Em Andamento</h5>
+                    <p class="card-text display-4">{{ denuncias_em_andamento }}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card bg-success text-white text-center shadow">
+                  <div class="card-body">
+                    <h5 class="card-title">Finalizadas</h5>
+                    <p class="card-text display-4">{{ denuncias_finalizadas }}</p>
+                  </div>
+                </div>
+              </div>
+        </div>
+
+        <div class="row justify-content-center mb-5">
+          <div class="col-lg-12">
+            <h3 class="mb-3">Denúncias Recentes</h3>
+            <div class="card shadow-sm" style="overflow: hidden;">
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  
+                  <table class="table table-dark table-striped table-hover mb-0">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Status</th>
+                        <th>Categoria</th>
+                        <th>Data de Envio</th>
+                        <th class="text-right">Ações</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for denuncia in denuncias|slice:":10" %}
+                      <tr>
+                        <td>#{{ denuncia.id }}</td>
+                        <td><span class="badge badge-light text-white">{{ denuncia.get_status_display }}</span></td>
+                        <td>{{ denuncia.descricao_denuncia.categoria.nome }}</td>
+                        <td>{{ denuncia.data_envio|date:"d/m/Y H:i" }}</td>
+                        <td class="text-right">
+                            <a href="{% url 'detalhar_denuncia' denuncia.id %}" class="btn btn-sm btn-info">Ver Detalhes</a>
+                        </td>
+                      </tr>
+                      {% empty %}
+                      <tr>
+                        <td colspan="5" class="text-center text-muted py-4">Nenhuma denúncia encontrada.</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row justify-content-center">
+          <div class="col-lg-12">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h3 class="mb-0">Gerenciar Categorias</h3>
+              <a href="{% url 'criar_categoria' %}" class="btn btn-primary">Adicionar Nova Categoria</a>
+            </div>
+            <div class="card shadow-sm" style="overflow: hidden;">
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  <table class="table table-dark table-striped table-hover mb-0">
+                    <thead>
+                      <tr>
+                        <th scope="col" style="width: 70%;">Nome da Categoria</th>
+                        <th scope="col" class="text-right">Ações</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for categoria in categorias %}
+                      <tr>
+                        <td>{{ categoria.nome }}</td>
+                        <td class="text-right">
+                          <a href="{% url 'editar_categoria' categoria_id=categoria.id %}" class="btn btn-sm btn-warning mr-2">Editar</a>
+                          <a href="{% url 'deletar_categoria' categoria_id=categoria.id %}" class="btn btn-sm btn-danger">Excluir</a>
+                        </td>
+                      </tr>
+                      {% empty %}
+                      <tr>
+                        <td colspan="2" class="text-center text-muted py-4">Nenhuma categoria cadastrada.</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+</main>
+
+  <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'assets/js/main.js' %}"></script>
+
+</body>
+</html>

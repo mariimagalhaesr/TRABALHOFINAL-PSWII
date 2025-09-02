@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="page-title" data-aos="fade">
+  <div class="container position-relative">
+    <h1>Detalhes da Denúncia #{{ denuncia.id }}</h1>
+    <p>Analise a ocorrência e atualize seu andamento.</p>
+    <nav class="breadcrumbs">
+      <ol>
+        <li><a href="{% url 'index' %}">Página Inicial</a></li>
+        <li><a href="{% url 'listar_denuncia' %}">Painel de Gestão</a></li>
+        <li class="current">Detalhes</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+<section class="section">
+    <div class="container">
+        <div class="row gy-4">
+            <div class="col-lg-7" data-aos="fade-up" data-aos-delay="100">
+                <div class="card" style="background-color: rgba(255, 255, 255, 0); border: none; color: white;">
+                    <div class="card-header">
+                        <h5>Informações da Ocorrência</h5>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Código de Rastreamento:</strong> {{ denuncia.codigo_rastreamento }}</p>
+                        <p><strong>Categoria:</strong> {{ denuncia.categoria.nome }}</p>
+                        <p><strong>Data do Ocorrido:</strong> {{ denuncia.dt_ocorrido|date:"d/m/Y H:i" }}</p>
+                        <p><strong>Local:</strong> {{ denuncia.local }}</p>
+                        <hr>
+                        <h6><strong>Descrição</strong></h6>
+                        <p>{{ denuncia.descricao|linebreaks }}</p>
+                        <h6><strong>Envolvidos</strong></h6>
+                        <p>{{ denuncia.envolvidos|default:"N/A"|linebreaks }}</p>
+
+                        <h6><strong>Provas Anexadas</strong></h6>
+                        <ul class="list-group">
+                        {% for prova in provas %}
+                            <li class="list-group-item">
+                                <a href="{{ prova.conteudo.url }}" target="_blank">
+                                    <i class="bi bi-paperclip"></i> Ver anexo {{ forloop.counter }}
+                                </a>
+                            </li>
+                        {% empty %}
+                            <li class="list-group-item" style="background-color: rgba(255, 255, 255, 0); border: none; color: white;">Nenhuma prova foi anexada.</li>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5" data-aos="fade-up" data-aos-delay="200">
+                <div class="card" style="background-color: rgba(255, 255, 255, 0); border: none; color: white;">
+                    <div class="card-header">
+                        <h5>Painel de Atualização</h5>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" >
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <div class="text-center">
+                               <button type="submit" class="btn btn-success mt-3">Salvar Alterações</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="{% url 'listar_denuncia' %}" class="btn btn-secondary mt-4"><i class="bi bi-arrow-left"></i> Voltar para a Lista</a>
+    </div>
+</section>
+{% endblock %}
