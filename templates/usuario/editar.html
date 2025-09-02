@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-title" data-aos="fade">
+  <div class="container position-relative">
+    <h1>Editar Usuário</h1>
+    <nav class="breadcrumbs">
+      <ol>
+        <li><a href="{% url 'index' %}">Página Inicial</a></li>
+        <li><a href="{% url 'index_usuario' %}">Usuários</a></li>
+        <li class="current">Editando {{ usuario.username }}</li>
+      </ol>
+    </nav>
+  </div>
+</div><section class="section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8" data-aos="fade-up" data-aos-delay="100">
+        <div class="form-container p-4 p-md-5 border rounded-3 bg-light">
+          <form method="post">
+              {% csrf_token %}
+              {{ form.as_p }}
+              <div class="mt-4">
+                  <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                  <a href="{% url 'index_usuario' %}" class="btn btn-secondary">Cancelar</a>
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
