@@ -1,0 +1,197 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Voz Anônima</title>
+
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <link href="{% static 'assets/img/favicon.png' %}" rel="icon">
+  <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+
+  <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
+
+</head>
+
+<body class="index-page">
+
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="header-container container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+      <a href="{% url 'index' %}" class="logo d-flex align-items-center me-auto me-xl-0">
+        <h1 class="sitename">Voz Anônima</h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="#hero" class="active" >Página Inicial</a></li>
+          <li><a href="#funciona">Como Funciona</a></li>
+          <li><a href="#privacidade">Política de Privacidade</a></li>
+          <li><a href="{% url 'consultar_denuncia' %}">Acompanhar Denúncia</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+      <div class="d-flex align-items-center gap-2">
+      <a class="btn-getstarted" href="{% url 'enviar_denuncia' %}">DENUNCIE!</a>
+      <a href="{% url 'login' %}" class="btn btn-outline-secondary btn-sm">
+        <i class="bi bi-shield-lock"></i> Área Administrativa
+      </a>
+</div>
+
+    </div>
+  </header>
+
+  <main class="main">
+
+    <section id="hero" class="hero section">
+      <div class="container">
+        <div class="row gy-4">
+          <div class="col-lg-7 content-col" data-aos="fade-up">
+            <div class="content">
+              <div class="main-heading">
+                <h1>Olá, nós somos o <span style="color: #a5c93d;"><br>Voz Anônima</span></h1>
+              </div>
+
+              <div class="divider"></div>
+
+              <div class="description">
+                <p>Não se cale! Denuncie situações de bullying, abusos ou racismo de forma totalmente anônima. Sua voz pode fazer a diferença e salvar vidas.</p>
+              </div>
+
+              <div class="d-flex justify-content-center flex-wrap gap-3">
+                <div class="cta-button">
+                  <a href="#funciona" class="btn">
+                    <span>COMO FUNCIONA?</span>
+                    <i class="bi bi-arrow-right"></i>
+                  </a>
+                </div>
+                <div class="cta-button">
+                  <a href="{% url 'enviar_denuncia' %}" class="btn" style="background-color: #a5c93d; border-color: #a5c93d;">
+                    <span>DENUNCIE!</span>
+                    <i class="bi bi-arrow-right"></i>
+                  </a>
+                </div>
+                <div class="cta-button">
+                  <a href="#privacidade" class="btn">
+                    <span>POLÍTICA DE PRIVACIDADE</span>
+                    <i class="bi bi-arrow-right"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="funciona" class="about section">
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Como Funciona</h2>
+        <div><span>Passo a Passo </span> <span class="description-title">do Processo</span></div>
+      </div>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-10" data-aos="fade-up" data-aos-delay="100">
+            <div class="about-content">
+              <ol style="font-size: 1.1rem; line-height: 1.6;">
+                <li class="mb-3">
+                  <strong>Faça sua denúncia:</strong> Clique em "Denuncie!", selecione a categoria adequada e preencha o formulário relatando o ocorrido. Não é necessário se identificar — o envio é totalmente anônimo e seguro.
+                </li>
+                <li class="mb-3">
+                  <strong>Análise do caso:</strong> Após o envio, as informações serão direcionadas à Coordenação de Assuntos Estudantis (CAE), responsável por analisar os relatos recebidos.
+                </li>
+                <li class="mb-3">
+                  <strong>Ação e Acolhimento:</strong> A CAE tomará as medidas cabíveis com seriedade, confidencialidade e compromisso com o bem-estar de todos os envolvidos, garantindo o devido acolhimento e encaminhamento do caso.
+                </li>
+                <li>
+                  <strong>Importante:</strong> Acompanhe o status da sua denúncia utilizando o código fornecido após o envio. Este código é único e essencial para verificar o andamento do seu caso. Use no site <a href="{% url 'consultar_denuncia' %}">Acompanhar Denúncia</a> para acompanhar o progresso da sua denúncia.
+                </li>
+              </ol>
+            </div>
+            <div class="about-content mt-5 text-center">
+                <h4 class="fw-bold">POR QUE ISSO É IMPORTANTE?</h4>
+                <p style="font-size: 1.1rem; line-height: 1.6;">Sabemos que nem sempre é fácil falar com alguém pessoalmente. Este sistema foi feito para garantir que você possa se expressar com segurança, ajudando a construir um ambiente escolar mais justo e respeitoso.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="privacidade" class="about section light-background">
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Privacidade</h2>
+        <div><span>Nossa </span> <span class="description-title">Política de Privacidade</span></div>
+      </div>
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+          <div class="row justify-content-center text-center">
+              <div class="col-lg-10">
+                <p class="lead mb-5">Levamos sua privacidade a sério. Aqui explicamos como lidamos com seus dados durante o uso do nosso sistema.</p>
+              </div>
+          </div>
+        <div class="row gy-4">
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-item text-center">
+                    <i class="bi bi-shield-lock" style="font-size: 48px; color: #a5c93d;"></i>
+                    <h5 class="mt-3">Anonimato Garantido</h5>
+                    <p>Não coletamos dados pessoais identificáveis, como seu nome, e-mail, endereço IP ou localização.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-item text-center">
+                    <i class="bi bi-lock" style="font-size: 48px; color: #a5c93d;"></i>
+                    <h5 class="mt-3">Comunicação Segura</h5>
+                    <p>Qualquer informação trocada com nosso site é protegida por criptografia de ponta a ponta.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
+                <div class="feature-item text-center">
+                    <i class="bi bi-x-octagon" style="font-size: 48px; color: #a5c93d;"></i>
+                    <h5 class="mt-3">Dados Intransferíveis</h5>
+                    <p>Suas informações nunca serão vendidas ou compartilhadas com terceiros para fins comerciais.</p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer id="footer" class="footer">
+    <div class="container copyright text-center mt-4">
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">Voz Anônima</strong> <span>All Rights Reserved</span></p>
+      <div class="credits">
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      </div>
+    </div>
+  </footer>
+
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <div id="preloader"></div>
+
+  <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+  <script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
+  <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+
+  <script src="{% static 'assets/js/main.js' %}"></script>
+
+</body>
+</html>

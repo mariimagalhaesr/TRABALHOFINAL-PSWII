@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-title dark-background">
+  <div class="container position-relative">
+    <h1>Confirmar Exclusão</h1>
+    <p>Esta ação não pode ser desfeita. Por favor, confirme sua decisão.</p>
+    <nav class="breadcrumbs">
+      <ol>
+        <li><a href="{% url 'index' %}">Home</a></li>
+        <li><a href="{% url 'listar_categorias' %}">Categorias</a></li>
+        <li class="current">Excluir</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="card border-danger bg-dark text-white shadow-sm">
+          <div class="card-header bg-danger text-white">
+            <h5 class="mb-0">Atenção!</h5>
+          </div>
+          <div class="card-body text-center">
+            <p class="lead">Você tem certeza que deseja excluir permanentemente a categoria <strong>"{{ objeto.nome }}"</strong>?</p>
+            <p class="text-danger">Todas as denúncias associadas a ela serão perdidas para sempre.</p>
+            <form method="post" class="mt-4">
+              {% csrf_token %}
+              <a href="{% url 'listar_categorias' %}" class="btn btn-secondary btn-lg">Cancelar</a>
+              <button type="submit" class="btn btn-danger btn-lg ml-2">Sim, Excluir</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

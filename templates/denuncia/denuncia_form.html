@@ -1,15 +1,57 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Enviar Denúncia</title>
-</head>
-<body>
-    <h1>Formulário de Denúncia</h1>
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="page-title" data-aos="fade">
+  <div class="container position-relative">
+    <h1>Enviar Denúncia Anônima</h1>
+    <p>Envie sua denúncia anônima preenchendo devidamente os seguintes campos:</p>
+    <nav class="breadcrumbs">
+      <ol>
+        <li><a href="{% url 'index' %}">Página Inicial</a></li>
+        <li><a href="{% url 'listar_denuncia' %}">Denúncia</a></li>
+        <li class="current">Enviar</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+<section class="section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8" data-aos="fade-up" data-aos-delay="100">
+        <div class="form-container p-4 p-md-5 border rounded-3">
+    <h2>Enviar Denúncia Anônima</h2>
+    <p>Sua identidade será mantida em sigilo absoluto.</p>
+
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Enviar</button>
+
+        <div class="mb-3">
+            <label for="{{ form.descricao.id_for_label }}" class="form-label">{{ form.descricao.label }}</label>
+            {{ form.descricao }}
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.dt_ocorrido.id_for_label }}" class="form-label">{{ form.dt_ocorrido.label }}</label>
+            {{ form.dt_ocorrido }}
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.categoria.id_for_label }}" class="form-label">{{ form.categoria.label }}</label>
+            {{ form.categoria }}
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.local.id_for_label }}" class="form-label">{{ form.local.label }}</label>
+            {{ form.local }}
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.envolvidos.id_for_label }}" class="form-label">{{ form.envolvidos.label }}</label>
+            {{ form.envolvidos }}
+        </div>
+
+        <div class="mb-3">
+            <label for="{{ form.arquivos_prova.id_for_label }}" class="form-label">{{ form.arquivos_prova.label }}</label><br>
+            <input type="file" name="{{ form.arquivos_prova.name }}" id="{{ form.arquivos_prova.id_for_label }}" multiple>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Enviar Denúncia</button>
     </form>
-</body>
-</html>
+</div>
+{% endblock %}
