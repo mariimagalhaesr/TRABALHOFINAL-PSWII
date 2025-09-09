@@ -5,6 +5,7 @@ class Midia(models.Model):
         ('imagem', 'Imagem'),
         ('audio', 'Áudio'),
         ('video', 'Vídeo'),
+        ('outro', 'Outro'),
     )
 
     nome = models.CharField(max_length=100)

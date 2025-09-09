@@ -7,7 +7,7 @@
     <nav class="breadcrumbs">
       <ol>
         <li><a href="{% url 'index' %}">Home</a></li>
-        <li><a href="{% url 'listar_categorias' %}">Categorias</a></li>
+        <li><a href="{% url 'listar_midias' %}">Midia</a></li>
         <li class="current">Excluir</li>
       </ol>
     </nav>
@@ -23,11 +23,11 @@
             <h5 class="mb-0">Atenção!</h5>
           </div>
           <div class="card-body text-center">
-            <p class="lead">Você tem certeza que deseja excluir permanentemente a categoria <strong>"{{ categoria.nome }}"</strong>?</p>
-            <p class="text-danger">Todas as denúncias associadas a ela serão perdidas para sempre.</p>
+            <p class="lead">Você tem certeza que deseja excluir permanentemente a mídia <strong>"{{ midia.nome }}"</strong>?</p>
+            <p class="text-danger">Mesmo se a mídia estiver associada a uma denúncia, será perdida para sempre.</p>
             <form method="post" class="mt-4">
               {% csrf_token %}
-              <a href="{% url 'listar_categorias' %}" class="btn btn-secondary btn-lg">Cancelar</a>
+              <a href="{% url 'listar_midias' %}" class="btn btn-secondary btn-lg">Cancelar</a>
               <button type="submit" class="btn btn-danger btn-lg ml-2">Sim, Excluir</button>
             </form>
           </div>

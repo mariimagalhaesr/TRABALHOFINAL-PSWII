@@ -12,7 +12,6 @@ urlpatterns = [
     path('midia/', include('midia.urls')),
     path('usuario/', include('usuario.urls')),
     path('categoria/', include('categoria.urls')),
-    path('midia_denuncia/', include('midia_denuncia.urls')),
     path('', views.index, name='index'),
     path('accounts/login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
     path('accounts/logout/', auth_views.LogoutView.as_view(), name='logout'),  

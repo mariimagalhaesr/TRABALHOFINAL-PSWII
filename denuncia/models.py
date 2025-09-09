@@ -11,7 +11,6 @@ class Denuncia(models.Model):
         ('finalizada', 'Finalizada'),
         ('arquivada', 'Arquivada'),
     )
-
     descricao = models.TextField()
     dt_envio = models.DateTimeField(auto_now_add=True)
     codigo_rastreamento = models.CharField(max_length=32, unique=True, blank=True, editable=False, help_text="Código único para o denunciante acompanhar o status.")    

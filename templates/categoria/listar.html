@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-
-<div class="page-title dark-background">
+<div class="page-title" data-aos="fade">
   <div class="container position-relative">
     <h1>Gerenciamento de Categorias</h1>
     <p>Adicione ou edite as categorias que podem ser usadas nas denúncias.</p>
@@ -16,9 +15,9 @@
 
 <section id="category-list" class="category-list section">
   <div class="container">
-    <div class="d-flex justify-content-between mb-3">
+    <div class="mb-4 text-end">
         <a href="{% url 'criar_categoria' %}" class="btn btn-primary">Adicionar Nova Categoria</a>
-        <a href="{% url 'painel_denuncias' %}" class="btn btn-secondary">Ir Para O Painel do Gestor</a>
+
     </div>
     <div class="row justify-content-center">
       <div class="col-lg-12">

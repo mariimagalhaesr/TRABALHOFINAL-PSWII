@@ -30,14 +30,18 @@
       <nav id="navmenu" class="navmenu">
         <ul>
           <li><a href="{% url 'index' %}">Página Inicial</a></li>
-          <li><a href="{% url 'consultar_denuncia' %}">Visualizar todas as denúncias</a></li>
-          <li><a href="{% url 'listar_categorias' %}">Visualizar todas as categorias</a></li>
+          <li><a href="{% url 'listar_denuncia' %}">Ver denúncias</a></li>
+          <li><a href="{% url 'listar_categorias' %}">Ver categorias</a></li>
+          <li><a href="{% url 'listar_midias' %}">Ver mídias</a></li>
+          <li><a href="{% url 'index_usuario' %}">Ver usuários</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
       <div class="d-flex align-items-center gap-2">
-        <a href="" class="btn btn-outline-secondary btn-sm">Deslogar</a>
-      </div>
+      <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-outline-secondary btn-sm">Deslogar</button>
+      </form>
     </div>
   </header>
 
@@ -105,18 +109,21 @@
                     <tbody>
                       {% for denuncia in denuncias|slice:":10" %}
                       <tr>
-                        <td>#{{ denuncia.id }}</td>
-                        <td><span class="badge badge-light text-white">{{ denuncia.get_status_display }}</span></td>
-                        <td>{{ denuncia.descricao_denuncia.categoria.nome }}</td>
-                        <td>{{ denuncia.data_envio|date:"d/m/Y H:i" }}</td>
-                        <td class="text-right">
+                        <td>{{ denuncia.id }}</td>
+                        <td>{{ denuncia.categoria.nome }}</td>
+                        <td>{{ denuncia.dt_envio|date:"d/m/Y H:i" }}</td>
+                        <td>
+                            <span class="badge 
+                                {% if denuncia.status == 'recebida' %}bg-primary
+                                {% elif denuncia.status == 'em_andamento' %}bg-warning text-dark
+                                {% elif denuncia.status == 'finalizada' %}bg-success
+                                {% else %}bg-secondary{% endif %}">
+                                {{ denuncia.get_status_display }}
+                            </span>
+                        </td>
+                        <td>
                             <a href="{% url 'detalhar_denuncia' denuncia.id %}" class="btn btn-sm btn-info">Ver Detalhes</a>
                         </td>
-                      </tr>
-                      {% empty %}
-                      <tr>
-                        <td colspan="5" class="text-center text-muted py-4">Nenhuma denúncia encontrada.</td>
-                      </tr>
                       {% endfor %}
                     </tbody>
                   </table>
@@ -127,7 +134,7 @@
           </div>
         </div>
 
-        <div class="row justify-content-center">
+        <div class="row justify-content-center mb-5">
           <div class="col-lg-12">
             <div class="d-flex justify-content-between align-items-center mb-3">
               <h3 class="mb-0">Gerenciar Categorias</h3>
@@ -159,6 +166,51 @@
                       {% endfor %}
                     </tbody>
                   </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row justify-content-center mb-5">
+          <div class="col-lg-12">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3 class="mb-0">Gerenciar Usuários (Gestores)</h3>
+            <a href="{% url 'cadastrar_usuario' %}" class="btn btn-primary">Adicionar Novo Usuário</a>
+            </div>
+            <div class="card shadow-sm" style="overflow: hidden;">
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  
+                  <table class="table table-dark table-striped table-hover mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Nome Completo</th>
+                        <th>Usuário</th>
+                        <th>Setor</th>
+                        <th class="text-center">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for usuario in usuarios %}
+                    <tr>
+                        <td>{{ usuario.get_full_name }}</td>
+                        <td>{{ usuario.username }}</td>
+                        <td>{{ usuario.setor }}</td>
+                        <td class="text-center">
+                            <a href="{% url 'detalhar_usuario' usuario.id %}" class="btn btn-sm btn-info" title="Detalhes"><i class="bi bi-eye"></i></a>
+                            <a href="{% url 'editar_usuario' usuario.id %}" class="btn btn-sm btn-warning" title="Editar"><i class="bi bi-pencil"></i></a>
+                            <a href="{% url 'deletar_usuario' usuario.id %}" class="btn btn-sm btn-danger" title="Deletar"><i class="bi bi-trash"></i></a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center p-4">Nenhum usuário cadastrado.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
                 </div>
               </div>
             </div>

@@ -61,6 +61,7 @@ def deletar(request, usuario_id):
 def painel_denuncias(request):
     todas_denuncias = Denuncia.objects.all()
     todas_categorias = Categoria.objects.all()
+    todos_usuarios = Usuario.objects.all()
     total_denuncias = todas_denuncias.count()
     denuncias_em_andamento = todas_denuncias.filter(status='em_andamento').count()
     denuncias_finalizadas = todas_denuncias.filter(status='finalizada').count()
@@ -70,6 +71,7 @@ def painel_denuncias(request):
         'denuncias': todas_denuncias.order_by('-dt_envio'),
         'categorias': todas_categorias, 
         'total_denuncias': total_denuncias,
+        'usuarios': todos_usuarios,
         'denuncias_em_andamento': denuncias_em_andamento,
         'denuncias_finalizadas': denuncias_finalizadas,
     }

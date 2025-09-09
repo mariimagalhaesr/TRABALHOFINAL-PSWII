@@ -38,19 +38,33 @@
       <nav id="navmenu" class="navmenu">
         <ul>
           <li><a href="{% url 'index' %}">Página Inicial</a></li>
+
+        {% if user.is_authenticated %}
+          <li><a href="{% url 'listar_denuncia' %}">Ver denúncias</a></li>
+          <li><a href="{% url 'listar_categorias' %}">Ver categorias</a></li>
+          <li><a href="{% url 'listar_midias' %}">Ver mídias</a></li>
+          <li><a href="{% url 'index_usuario' %}">Ver usuários</a></li>
+        {% else %}
           <li><a href="{% url 'index' %}#funciona">Como Funciona</a></li>
           <li><a href="{% url 'index' %}#privacidade">Política de Privacidade</a></li>
           <li><a href="{% url 'consultar_denuncia' %}">Acompanhar Denúncia</a></li>
+        {% endif %}
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
 
       <div class="d-flex align-items-center gap-2">
+      {% if user.is_authenticated %}
+        <form method="post" action="{% url 'logout' %}">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-outline-secondary btn-sm">Deslogar</button>
+        </form>
+      {% else %}
         <a class="btn-getstarted" href="{% url 'enviar_denuncia' %}">DENUNCIE!</a>
-        
         <a href="{% url 'login' %}" class="btn btn-outline-secondary btn-sm" title="Área Administrativa">
           <i class="bi bi-shield-lock"></i> Área Administrativa
         </a>
+      {% endif %}
       </div>
 
     </div>
@@ -66,9 +80,6 @@
   <footer id="footer" class="footer">
     <div class="container copyright text-center mt-4">
       <p>© <span>Copyright</span> <strong class="px-1 sitename">Voz Anônima</strong> <span>All Rights Reserved</span></p>
-      <div class="credits">
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-      </div>
     </div>
   </footer>
 

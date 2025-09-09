@@ -138,4 +138,4 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 LOGIN_URL= '/accounts/login/'
 LOGIN_REDIRECT_URL= '/usuario/painel/'
-LOGOUT_REDIRECT_URL ='/accounts/login/'
+LOGOUT_REDIRECT_URL ='/'

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="page-title" data-aos="fade">
+  <div class="container position-relative">
+    <h1>Gerenciamento de Mídias</h1>
+    <p>Visualize e gerencie todas as mídias cadastradas no sistema.</p>
+    <nav class="breadcrumbs">
+      <ol>
+        <li><a href="{% url 'index' %}">Home</a></li>
+        <li class="current">Mídias</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<div class="container">
+    <h1 class="my-4">Mídias Cadastradas</h1>
+    <div class="table-responsive">
+        <table class="table table-dark table-striped table-hover mb-0">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Tipo</th>
+                    <th scope="col">Arquivo</th>
+                    <th scope="col">Denúncia Relacionada</th>
+                    <th scope="col">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for midia in midias %}
+                <tr>
+                    <th scope="row">{{ midia.id }}</th>
+                    <td>{{ midia.nome }}</td>
+                    <td>{{ midia.get_tipo_display }}</td>
+                    <td><a href="{{ midia.arquivo.url }}" target="_blank">Ver Arquivo</a></td>
+                    
+                    <td>
+                        {% with midia_denuncia=midia.midiadenuncia_set.first %}
+                            {% if midia_denuncia %}
+                                <a href="{% url 'detalhar_denuncia' midia_denuncia.denuncia.id %}">
+                                    Denúncia #{{ midia_denuncia.denuncia.id }}
+                                </a>
+                            {% else %}
+                                <span class="text-muted">N/A (Mídia Geral)</span>
+                            {% endif %}
+                        {% endwith %}
+                    </td>
+
+                    <td>
+                        <a href="{% url 'deletar_midia' midia.id %}" class="btn btn-danger btn-sm">Deletar</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center">Nenhuma mídia cadastrada.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

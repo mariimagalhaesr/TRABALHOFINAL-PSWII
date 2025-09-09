@@ -46,10 +46,20 @@
       </nav>
 
       <div class="d-flex align-items-center gap-2">
-      <a class="btn-getstarted" href="{% url 'enviar_denuncia' %}">DENUNCIE!</a>
-      <a href="{% url 'login' %}" class="btn btn-outline-secondary btn-sm">
-        <i class="bi bi-shield-lock"></i> Área Administrativa
-      </a>
+      {% if user.is_authenticated %}
+      <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-outline-secondary btn-sm">Deslogar</button>
+      </form>
+        <a href="{% url 'painel_denuncias' %}" class="btn btn-outline-secondary btn-sm" title="Área Administrativa">
+          <i class="bi bi-shield-lock"></i> Área Administrativa
+        </a>
+      {% else %}
+        <a class="btn-getstarted" href="{% url 'enviar_denuncia' %}">DENUNCIE!</a>
+        <a href="{% url 'login' %}" class="btn btn-outline-secondary btn-sm" title="Área Administrativa">
+          <i class="bi bi-shield-lock"></i> Área Administrativa
+        </a>
+      {% endif %}
 </div>
 
     </div>
@@ -173,9 +183,6 @@
   <footer id="footer" class="footer">
     <div class="container copyright text-center mt-4">
       <p>© <span>Copyright</span> <strong class="px-1 sitename">Voz Anônima</strong> <span>All Rights Reserved</span></p>
-      <div class="credits">
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-      </div>
     </div>
   </footer>
 

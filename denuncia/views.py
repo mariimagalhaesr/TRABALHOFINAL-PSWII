@@ -9,29 +9,38 @@ def enviar_denuncia(request):
     if request.method == 'POST':
         form = DenunciaAnonimaForm(request.POST, request.FILES)
         if form.is_valid():
-
             denuncia = form.save()
-
             files = request.FILES.getlist('arquivos_prova')
 
             for f in files:
+                # --- LÓGICA DE DETECÇÃO DO TIPO DE MÍDIA ---
+                content_type = f.content_type
+                if content_type.startswith('image'):
+                    tipo_midia = 'imagem'
+                elif content_type.startswith('audio'):
+                    tipo_midia = 'audio'
+                elif content_type.startswith('video'):
+                    tipo_midia = 'video'
+                else:
+                    tipo_midia = 'outro'
 
                 nova_midia = Midia.objects.create(
                     nome=f.name,
-                    tipo='imagem', 
+                    tipo=tipo_midia, # Usando a variável com o tipo correto
                     arquivo=f
                 )
 
                 MidiaDenuncia.objects.create(
                     denuncia=denuncia,
                     midia=nova_midia,
+                    # O campo 'conteudo' é redundante, veja a otimização abaixo
                     conteudo=f
                 )
 
             return redirect('sucesso_denuncia', codigo_rastreamento=denuncia.codigo_rastreamento)
     else:
         form = DenunciaAnonimaForm()
-    
+
     return render(request, 'denuncia/denuncia_form.html', {'form': form})
 
 def sucesso_denuncia(request, codigo_rastreamento):
