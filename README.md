@@ -26,10 +26,10 @@ Yngrid Vitória Castro Martins
 
 Login: admin
 
-- Link Youtube: https://youtu.be/ndV99aSBFD4
-
 Senha: 1234
 
 Acesse o painel do administrador:
 
 http://127.0.0.1:8000/admin
+
+- Link Youtube: https://youtu.be/ndV99aSBFD4
